@@ -1,0 +1,6 @@
+.elements__item {
+    max-width: 282px;
+    background-color: #FFF;
+    border-radius: 10px;
+    list-style: none;
+}

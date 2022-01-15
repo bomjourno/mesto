@@ -1,0 +1,10 @@
+.profile__vector {
+    align-self: center;
+}
+
+@media screen and (max-width: 1000px) {
+    .profile__vector {
+        width: 16px;
+        height: 16px;
+    }
+}
