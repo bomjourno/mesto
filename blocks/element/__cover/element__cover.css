@@ -1,6 +1,6 @@
-.elements__cover {
+.element__cover {
     display: flex;
     justify-content: space-between;
     max-width: 242px;
-    margin: 0 auto;
+    margin: 25px auto 30px;
 }

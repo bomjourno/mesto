@@ -10,6 +10,8 @@
 @media screen and (max-width: 1000px) {
     .profile__info {
         margin: 0 0 36px;
-        gap: 14px 10px;
+        grid-template-columns: 220px 18px;
+        justify-content: center;
+        gap: 0;
     }
 }

@@ -1,4 +1,4 @@
-.footer__logo {
+.footer__copyright {
     margin: 0;
     color: #545454;
     font-style: normal;
@@ -8,7 +8,7 @@
 }
 
 @media screen and (max-width: 400px) {
-    .footer__logo {
+    .footer__copyright {
     font-size: 14px;
     line-height: 17px;
     }

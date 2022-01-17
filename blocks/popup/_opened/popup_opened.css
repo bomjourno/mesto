@@ -7,7 +7,7 @@
     }
 }
 
-.popup__opened {
+.popup_opened {
     display: flex;
     animation: fadeOn 1s;
     opacity: 1;

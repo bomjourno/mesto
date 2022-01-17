@@ -12,12 +12,15 @@
 
 @media screen and (max-width: 1000px) {
     .profile__edit-button {
+        justify-self: center;
         width: 18px;
         height: 18px;
-        margin-bottom: 5px;
+        margin-left: 10px;
+        margin-bottom: 6px;
     }
 }
 
 .profile__edit-button:hover {
     opacity: .6;
+    cursor: pointer;
 }

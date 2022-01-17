@@ -1,4 +1,4 @@
-.elements__button {
+.element__button {
     align-self: center;
     min-width: 22px;
     min-height: 19px;
@@ -11,6 +11,7 @@
     transition: opacity .3s;
 }
 
-.elements__button:hover {
+.element__button:hover {
     opacity: .5;
+    cursor: pointer;
 }
