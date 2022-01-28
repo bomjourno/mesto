@@ -26,55 +26,23 @@
         </section>
         <section class="elements">
             <ul class="elements__list">
-                <li class="element">
-                    <img class="element__picture" src="./images/karachaevsk.jpg" alt="Карачаевск">
-                    <div class="element__cover">
-                        <h2 class="element__title">Карачаевск</h2>
-                        <button class="element__button" type="button"></button>
-                    </div>
-                </li>
-                <li class="element">
-                    <img class="element__picture" src="./images/elbrus.jpg" alt="Гора Эльбрус">
-                    <div class="element__cover">
-                        <h2 class="element__title">Гора Эльбрус</h2>
-                        <button class="element__button" type="button"></button>
-                    </div>
-                </li>
-                <li class="element">
-                    <img class="element__picture" src="./images/dombai.jpg" alt="Домбай">
-                    <div class="element__cover">
-                        <h2 class="element__title">Домбай</h2>
-                        <button class="element__button" type="button"></button>
-                    </div>
-                </li>
-                <li class="element">
-                    <img class="element__picture" src="./images/new-zeland.jpeg" alt="Новая Зеландия">
-                    <div class="element__cover">
-                        <h2 class="element__title">Берег Новой Зеландии</h2>
-                        <button class="element__button" type="button"></button>
-                    </div>
-                </li>
-                <li class="element">
-                    <img class="element__picture" src="./images/place-kolsky.jpg" alt="Кольский">
-                    <div class="element__cover">
-                        <h2 class="element__title">Кольский</h2>
-                        <button class="element__button" type="button"></button>
-                    </div>
-                </li>
-                <li class="element">
-                    <img class="element__picture" src="./images/place-karelia.jpg" alt="Карелия">
-                    <div class="element__cover">
-                        <h2 class="element__title">Карелия</h2>
-                        <button class="element__button" type="button"></button>
-                    </div>
-                </li>
             </ul>
         </section>
     </main>
     <footer class="footer">
         <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
-    <div class="popup">
+    <template class="template">
+        <li class="element">
+            <img class="element__picture" src="#" alt="#">
+            <button class="element__remove" type="button" title="Удалить"></button>
+            <div class="element__cover">
+                <h2 class="element__title"></h2>
+                <button class="element__button" type="button"></button>
+            </div>
+        </li>
+    </template>
+    <div class="popup popup_edit-profile">
         <div class="popup__container">
             <button class="popup__close-button" type="button"></button>
             <form class="popup__form" name="edit-profile">
@@ -86,6 +54,26 @@
                 </fieldset>
             </form>
         </div>
+    </div>
+    <div class="popup popup_add-card">
+        <div class="popup__container">
+            <button class="popup__close-button" type="button"></button>
+            <form class="popup__form" name="edit-profile">
+                <fieldset class="popup__form-set">
+                    <h2 class="popup__title">Новое место</h2>
+                    <input class="popup__text popup__text_type_place" name="name" type="text" placeholder="Название" required>  
+                    <input class="popup__text popup__text_type_link" name="position" type="text" placeholder="Ссылка на картинку" required>
+                    <button class="popup__submit" type="submit">Создать</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <div class="popup popup_fullscreen-card">
+        <figure class="popup__figure">
+            <button class="popup__close-button" type="button"></button>
+            <img class="popup__picture" src="#" alt="#">
+            <figcaption class="popup__figcaption"></figcaption>
+        </figure>
     </div>
     <script src="./scripts/index.js"></script>
 </body>
