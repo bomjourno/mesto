@@ -66,8 +66,6 @@ function openPopupAddCard() {
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', closePopupEsc);
-  const submitBtn = popup.querySelector('.popup__submit');
-  submitBtn ? submitBtn.classList.add('popup__submit_inactive'):'';
 }
 
 function closePopupEsc (evt) {
@@ -108,6 +106,9 @@ function handleAddCard(evt) {
   closePopupAddCard();
   placeNameInput.value = '';
   linkInput.value = '';
+  const submitBtn = evt.target.querySelector('.popup__submit');
+  submitBtn ? submitBtn.classList.add('popup__submit_inactive'):'';
+  submitBtn ? submitBtn.setAttribute("disabled", true):'';
 }
 
 function handleEditProfile(evt) {
