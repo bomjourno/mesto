@@ -1,13 +1,13 @@
+const popups = document.querySelectorAll('.popup');
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const popupAddCard = document.querySelector('.popup_add-card');
 const popupFullScreen = document.querySelector('.popup_fullscreen-card')
-const btnClsEditProfile = popupEditProfile.querySelector('.popup__close-button');
-const btnClsAddCard = popupAddCard.querySelector('.popup__close-button');
-const btnClsFullScreen = popupFullScreen.querySelector('.popup__close-button');
 const nameInput = document.querySelector('.popup__text_type_name');
 const jobInput = document.querySelector('.popup__text_type_position');
 const placeNameInput = document.querySelector('.popup__text_type_place');
 const linkInput = document.querySelector('.popup__text_type_link');
+const picture = popupFullScreen.querySelector('.popup__picture');
+const pictureCaption = popupFullScreen.querySelector('.popup__figcaption'); 
 const btnEditProfile = document.querySelector('.profile__edit-button');
 const btnAddCard = document.querySelector('.profile__add-button');
 const profileName = document.querySelector('.profile__title');
@@ -66,6 +66,8 @@ function openPopupAddCard() {
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', closePopupEsc);
+  const submitBtn = popup.querySelector('.popup__submit');
+  submitBtn ? submitBtn.classList.add('popup__submit_inactive'):'';
 }
 
 function closePopupEsc (evt) {
@@ -124,8 +126,6 @@ function handleRemove(evt) {
 }
 
 function handleFullScreen(cardData) {
-  const picture = popupFullScreen.querySelector('.popup__picture');
-  const pictureCaption = popupFullScreen.querySelector('.popup__figcaption');
   picture.src = cardData.link;
   picture.alt = cardData.name;
   pictureCaption.textContent = picture.alt;
@@ -148,30 +148,27 @@ function addListeners(element, cardData) {
 //Здесь каждая карточка проходит через шаблон
 function createCard(card) {
   const newCard = templateCard.querySelector('.element').cloneNode(true);
-  newCard.querySelector('.element__title').textContent = card.name;
-  newCard.querySelector('.element__picture').src = card.link;
-  newCard.querySelector('.element__picture').alt = card.name;
+  const elementPicture = newCard.querySelector('.element__picture');
+  const elementTitle = newCard.querySelector('.element__title');
+  elementTitle.textContent = card.name;
+  elementPicture.src = card.link;
+  elementPicture.alt = card.name;
   addListeners(newCard, card);
   return newCard;
 }
 
-function hideOverlay() {
-  const allPopups = Array.from(document.querySelectorAll('.popup'));
-  allPopups.forEach((popupElement) => {
-    popupElement.addEventListener('click', function(evt) {
-      if(evt.target.classList.contains('popup_opened')) {
-        closePopup(evt.target);
+popups.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+      if (evt.target.classList.contains('popup_opened')) {
+        closePopup(popup)
       }
-    })
+      if (evt.target.classList.contains('popup__close-button')) {
+        closePopup(popup)
+      } 
   })
-}
-
-hideOverlay();
+}) 
 
 btnEditProfile.addEventListener('click', openPopupEditProfile);
 btnAddCard.addEventListener('click', openPopupAddCard);
-btnClsAddCard.addEventListener('click', closePopupAddCard);
-btnClsEditProfile.addEventListener('click', closePopupEditProfile);
-btnClsFullScreen.addEventListener('click', closePopupFullScreen);
 popupEditProfile.addEventListener('submit', handleEditProfile);
 popupAddCard.addEventListener('submit', handleAddCard);

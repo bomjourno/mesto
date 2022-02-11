@@ -20,11 +20,10 @@ const checkInputValidity = (formElement, inputElement, validationSelectors) => {
   }
 }
 
-const setEventListeners = (formElement, inputSelector, validationSelectors) => {
-  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+const setEventListeners = (formElement, validationSelectors) => {
+  const inputList = Array.from(formElement.querySelectorAll(validationSelectors.inputSelector));
   const buttonElement = formElement.querySelector(validationSelectors.submitButtonSelector);
-  // Отключили кнопку создания места при первом открытии попапа
-  const checkExclusion = formElement.querySelector(validationSelectors.exclusion) ? toggleButtonState(inputList, buttonElement, validationSelectors):'';
+  toggleButtonState(inputList, buttonElement, validationSelectors);
   inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', function () {
           checkInputValidity(formElement, inputElement, validationSelectors);
@@ -41,19 +40,21 @@ function hasInvalidInput(inputList) {
 
 function toggleButtonState(inputList, buttonElement, validationSelectors) {
   if (hasInvalidInput(inputList)) {
+      buttonElement.setAttribute("disabled", true);
       buttonElement.classList.add(validationSelectors.inactiveButtonClass);
   } else {
+      buttonElement.removeAttribute("disabled", true);
       buttonElement.classList.remove(validationSelectors.inactiveButtonClass);
   }
 }
 
-const enableValidation = ({formSelector, inputSelector}) => {
-  const formList = Array.from(document.querySelectorAll(formSelector));
+const enableValidation = (validationSelectors) => {
+  const formList = Array.from(document.querySelectorAll(validationSelectors.formSelector));
   formList.forEach((formElement) => {
       formElement.addEventListener('submit', function (evt) {
           evt.preventDefault();
       });
-      setEventListeners(formElement, inputSelector, validationSelectors);
+      setEventListeners(formElement, validationSelectors);
   });
 }
 
@@ -64,7 +65,6 @@ const validationSelectors = {
   inactiveButtonClass: 'popup__submit_inactive',
   inputErrorClass: 'popup__text_type_error',
   errorClass: 'popup__text-error_active',
-  exclusion: '#place-input'
 }
 
 enableValidation(validationSelectors);
