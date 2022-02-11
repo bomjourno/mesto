@@ -107,8 +107,10 @@ function handleAddCard(evt) {
   placeNameInput.value = '';
   linkInput.value = '';
   const submitBtn = evt.target.querySelector('.popup__submit');
-  submitBtn ? submitBtn.classList.add('popup__submit_inactive'):'';
-  submitBtn ? submitBtn.setAttribute("disabled", true):'';
+  if(submitBtn) {
+    submitBtn.classList.add('popup__submit_inactive');
+    submitBtn.disabled = true;
+  }
 }
 
 function handleEditProfile(evt) {
