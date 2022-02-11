@@ -49,6 +49,7 @@ function addCardToContainer(container, card) {
 //Открываем попапы
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupEsc);
 }
 
 function openPopupEditProfile() {
@@ -64,6 +65,14 @@ function openPopupAddCard() {
 // Закрываем попапы
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupEsc);
+}
+
+function closePopupEsc (evt) {
+  if (evt.key === "Escape") {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
+  }
 }
 
 function closePopupEditProfile() {
@@ -145,6 +154,19 @@ function createCard(card) {
   addListeners(newCard, card);
   return newCard;
 }
+
+function hideOverlay() {
+  const allPopups = Array.from(document.querySelectorAll('.popup'));
+  allPopups.forEach((popupElement) => {
+    popupElement.addEventListener('click', function(evt) {
+      if(evt.target.classList.contains('popup_opened')) {
+        closePopup(evt.target);
+      }
+    })
+  })
+}
+
+hideOverlay();
 
 btnEditProfile.addEventListener('click', openPopupEditProfile);
 btnAddCard.addEventListener('click', openPopupAddCard);
