@@ -67,28 +67,21 @@ function closePopupAddCard() {
 //Открываем и закрываем попапs
 popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
-      if (evt.target.classList.contains('popup_opened')) {
-        closePopup(popup)
+      if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close-button')) {
+        closePopup(popup);
       }
-      if (evt.target.classList.contains('popup__close-button')) {
-        closePopup(popup)
-      } 
   })
 }) 
 
 //Функция добавления новой карточки
 function handleAddCard(evt) {
   evt.preventDefault();
-  const newCard = createCard({name: placeNameInput.value, link: linkInput.value, alt: placeNameInput.value});
+  const newCard = createCard({name: placeNameInput.value, link: linkInput.value});
   addCardToContainer(elementsContainer, newCard);
   closePopupAddCard();
   placeNameInput.value = '';
   linkInput.value = '';
-  const submitBtn = evt.target.querySelector('.popup__submit');
-  if(submitBtn) {
-    submitBtn.classList.add('popup__submit_inactive');
-    submitBtn.disabled = true;
-  }
+  addCardFormValidator.toggleButtonState();
 }
 
 //Редактирование профиля
