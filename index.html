@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="pages/index.css">
     <title>Mesto Russia</title>
 </head>
 <body class="page">
     <header class="header">
-        <img class="header__logo" src="./images/logo.svg" alt="Логотип Mesto Russia">
+        <img class="header__logo" src="<%=require('./src/images/logo.svg')%>" alt="Логотип Mesto Russia">
     </header>
     <main>
         <section class="profile">
             <div class="profile__cover">
-                <img class="profile__avatar" src="./images/avatar-img.jpg" alt="Аватар">
+                <img class="profile__avatar" src="<%=require('./src/images/avatar-img.jpg')%>" alt="Аватар">
                 <div class="profile__info">
                     <h1 class="profile__title">Жак-Ив Кусто</h1>
                     <button type="button" class="profile__edit-button"></button>
@@ -21,7 +20,7 @@
                 </div>
             </div>
             <button type="button" class="profile__add-button">
-                <img class="profile__vector" src="./images/vector.svg" alt="Кнопка">
+                <img class="profile__vector" src="<%=require('./src/images/vector.svg')%>" alt="Кнопка">
             </button>
         </section>
         <section class="elements">
@@ -45,7 +44,7 @@
     <div class="popup popup_edit-profile">
         <div class="popup__container">
             <button class="popup__close-button" type="button"></button>
-            <form class="popup__form" name="edit-profile">
+            <form class="popup__form" name="myForm">
                 <fieldset class="popup__form-set">
                     <h2 class="popup__title">Редактировать профиль</h2>
                     <label class="label">
@@ -64,7 +63,7 @@
     <div class="popup popup_add-card">
         <div class="popup__container">
             <button class="popup__close-button" type="button"></button>
-            <form class="popup__form" name="edit-profile">
+            <form class="popup__form" name="myForm">
                 <fieldset class="popup__form-set">
                     <h2 class="popup__title">Новое место</h2>
                     <label class="label">
@@ -72,7 +71,7 @@
                         <span class="popup__text-error place-input-error"></span>
                     </label>
                     <label class="label">
-                        <input class="popup__text popup__text_type_link" id="link-input" name="position" type="url" placeholder="Ссылка на картинку" required>
+                        <input class="popup__text popup__text_type_link" id="link-input" name="link" type="url" placeholder="Ссылка на картинку" required>
                         <span class="popup__text-error link-input-error"></span>
                     </label>
                     <button class="popup__submit" type="submit">Создать</button>
@@ -87,6 +86,5 @@
             <figcaption class="popup__figcaption"></figcaption>
         </figure>
     </div>
-    <script type="module" src="./scripts/index.js"></script>
 </body>
 </html>

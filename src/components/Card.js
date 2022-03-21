@@ -1,6 +1,4 @@
-export {Card};
-
-class Card {
+export default class Card {
   constructor(cardData, cardSelector, handleFullScreen) {
     this._cardSelector = cardSelector;
     this._handleFullScreen = handleFullScreen;
@@ -34,7 +32,7 @@ class Card {
   _setEventListeners() {
     this._likeBtn.addEventListener('click', () => this._handleLike());
     this._deleteBtn.addEventListener('click', () => this._handleRemove());
-    this._image.addEventListener('click', () => this._handleFullScreen(this._name, this._link));
+    this._image.addEventListener('click', () => this._handleFullScreen());
   }
 
   generateCard() {

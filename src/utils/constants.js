@@ -1,18 +1,12 @@
-const popups = document.querySelectorAll('.popup');
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const popupAddCard = document.querySelector('.popup_add-card');
-const popupFullScreen = document.querySelector('.popup_fullscreen-card')
 const nameInput = document.querySelector('.popup__text_type_name');
 const jobInput = document.querySelector('.popup__text_type_position');
-const placeNameInput = document.querySelector('.popup__text_type_place');
-const linkInput = document.querySelector('.popup__text_type_link');
-const picture = popupFullScreen.querySelector('.popup__picture');
-const pictureCaption = popupFullScreen.querySelector('.popup__figcaption'); 
 const btnEditProfile = document.querySelector('.profile__edit-button');
 const btnAddCard = document.querySelector('.profile__add-button');
-const profileName = document.querySelector('.profile__title');
-const profilePos = document.querySelector('.profile__position');
 const elementsContainer = document.querySelector('.elements__list');
+const userName = '.profile__title';
+const userInfo = '.profile__position';
 const initialCards = [
   {
     name: 'Алтай',
@@ -48,6 +42,7 @@ const validationSelectors = {
   errorClass: 'popup__text-error_active',
 }
 
-export {popups, popupEditProfile, popupAddCard, popupFullScreen, nameInput, jobInput, placeNameInput,
-  linkInput, picture, pictureCaption, btnEditProfile, btnAddCard, profileName, profilePos, elementsContainer, 
-  initialCards, validationSelectors}
+export {
+  popupEditProfile, popupAddCard, userName, nameInput, jobInput, userInfo,
+  btnEditProfile, btnAddCard, elementsContainer, initialCards, validationSelectors
+}
