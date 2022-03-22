@@ -26,7 +26,7 @@ const cardsList = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      createCard(item);
+      cardsList.addItem(createCard(item));
     }
   }, elementsContainer
 )
@@ -39,7 +39,7 @@ function createCard(cardData) {
     openFullScreen.open(cardData)
   });
   const cardElement = card.generateCard();
-  cardsList.addItem(cardElement);
+  return cardElement;
 }
 
 const userProfilePopup = new PopupWithForm('.popup_edit-profile', function submitForm(data) {
@@ -47,7 +47,7 @@ const userProfilePopup = new PopupWithForm('.popup_edit-profile', function submi
 })
 
 const addCardPopup = new PopupWithForm('.popup_add-card', (cardData) => {
-  createCard(cardData);
+  cardsList.addItem(createCard(cardData));
 })
 
 btnEditProfile.addEventListener('click', () => {
