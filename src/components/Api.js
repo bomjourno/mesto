@@ -4,7 +4,7 @@ export default class Api {
     this.headers = options.headers;
   }
 
-  takeUserData(data) {
+  getUserData() {
     return fetch(`${this.baseUrl}/users/me`, {
       headers: this.headers
     })
@@ -14,15 +14,7 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`)
       })
-      .then((result) => {
-        data.name.textContent = result.name;
-        data.position.textContent = result.about
-      }).catch((err) => {
-        console.log(`Ошибка: ${err.status}`)
-      });
   }
-
-
 
   getInitialCards() {
     return fetch(`${this.baseUrl}/cards`, {
@@ -34,6 +26,28 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
+  }
+
+  patchUserData(data) {
+    return fetch(`${this.baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: this.headers,
+      body: JSON.stringify({
+        name: data.name,
+        about: data.position
+      })
+    })
+  }
+
+  addNewCard(data) {
+    return fetch(`${this.baseUrl}/cards`, {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({
+        name: data.name,
+        link: data.link
+      })
+    })
   }
 }
 

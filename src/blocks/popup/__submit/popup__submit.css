@@ -1,6 +1,6 @@
 .popup__submit {
     height: 50px;
-    margin-bottom: 37px;
+    margin: 16px 0 37px;
     padding: 0;
     background-color: #000;
     font-style: normal;
@@ -24,6 +24,6 @@
         height: 46px;
         font-size: 14px;
         line-height: 17px;
-        margin-bottom: 25px;
+        margin: 6px 0 25px;
     }
 }

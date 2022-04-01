@@ -9,7 +9,8 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
-import Api from '../components/Api';
+import Api from '../components/Api.js';
+import PopupWithConfirmation from '../components/PopupWithConfirmation.js'
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-39',
@@ -19,8 +20,13 @@ const api = new Api({
   }
 });
 
+const user = new UserInfo({ userName, userInfo });
+
 // Подгружаем данные пользователя с сервера
-api.takeUserData({name: document.querySelector(userName), position: document.querySelector(userInfo)})
+api.getUserData().then((res) => {
+  user.setUserInfo({ name: res.name, position: res.about, id: res._id });
+  console.log(user);
+}).catch(err => { console.log(`Невозможно получить данные пользователя: ${err.status}`) })
 
 
 // Подгружаем карточки с сервера
@@ -29,8 +35,9 @@ let cardsList;
 
 api.getInitialCards().then((data) => {
   console.log('Карточки загружены с сервера')
+  console.log(data);
   startCardArr = data.map(item => {
-    return {name: item.name, link: item.link}
+    return { name: item.name, link: item.link, like: item.likes, id: item.owner._id }
   })
 }).catch(err => {
   console.log(`Не удалось загрузить данные с сервера, ошибка: ${err.status}`);
@@ -54,35 +61,49 @@ const addCardFormValidator = new FormValidator(validationSelectors, popupAddCard
 addCardFormValidator.enableValidation();
 
 const openFullScreen = new PopupWithImage('.popup_fullscreen-card');
-const user = new UserInfo({userName, userInfo});
 
+
+const popupWithConfirmation = new PopupWithConfirmation('.popup_delete-card',
+  function submitForm(data) {
+    data._card.remove()
+    popupWithConfirmation.close();
+  })
 
 
 //Функция создания карточки через класс Card
 function createCard(cardData) {
-  const card = new Card(cardData, '.template', function handleFullScreen() {
-    openFullScreen.open(cardData)
-  });
+  const card = new Card(cardData, '.template',
+    function handleFullScreen() {
+      openFullScreen.open(cardData);
+    },
+    function handleDeleteCard() {
+      popupWithConfirmation.open(this._element);
+    }, 
+    "eec6ccc0037c3f9801277b47");
   const cardElement = card.generateCard();
   return cardElement;
 }
 
-const userProfilePopup = new PopupWithForm('.popup_edit-profile', function submitForm(data) {
-  user.setUserInfo(data);  
-})
+const userProfilePopup = new PopupWithForm('.popup_edit-profile',
+  function submitForm(data) {
+    api.patchUserData(data).then(() => {
+      user.setUserInfo(data);
+    })
+  })
 
 const addCardPopup = new PopupWithForm('.popup_add-card', (cardData) => {
-  cardsList.addItem(createCard(cardData));
+  // cardsList.addItem(createCard(cardData));
+  api.addNewCard(cardData).then(() => cardsList.addItem(createCard(cardData)))
 })
 
 btnEditProfile.addEventListener('click', () => {
-  const userData = user.getUserInfo();
-  nameInput.value = userData.name;
-  jobInput.value = userData.position;
+  const { name, position } = user.getUserInfo();
+  nameInput.value = name;
+  jobInput.value = position;
   userProfilePopup.open();
 });
 
 btnAddCard.addEventListener('click', () => {
-  addCardFormValidator.toggleButtonState(); 
+  addCardFormValidator.toggleButtonState();
   addCardPopup.open();
 });
