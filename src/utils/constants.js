@@ -8,7 +8,7 @@ const jobInput = document.querySelector('.popup__text_type_position');
 
 const btnEditProfile = document.querySelector('.profile__edit-button');
 const btnAddCard = document.querySelector('.profile__add-button');
-const btnEditAvatar = document.querySelector('.profile__avatar_hover');
+const btnEditAvatar = document.querySelector('.profile__hover');
 const btnDeleteCard = document.querySelector('#delete-card')
 
 const elementsContainer = document.querySelector('.elements__list');
