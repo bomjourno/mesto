@@ -1,0 +1,26 @@
+.profile__avatar_hover {
+  position: absolute;
+  width: 121px;
+  height: 121px;
+  opacity: 0;
+  z-index: 1;
+  border-radius: 50%;
+  background-image: url(../../../../images/edit-avatar.svg);
+  background-repeat: no-repeat;
+}
+
+.profile__avatar_hover:hover {
+  opacity: .8;
+  transition: opacity .3s;
+  cursor: pointer;
+  background-color: black;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 26px 26px;
+}
+
+@media screen and (max-width: 1000px) {
+  .profile__avatar_hover:hover {
+      left: calc(50%-60px);
+  }
+}

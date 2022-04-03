@@ -1,12 +1,21 @@
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const popupAddCard = document.querySelector('.popup_add-card');
+const popupProfileAvatar = document.querySelector('.popup_change-avatar');
+
+
 const nameInput = document.querySelector('.popup__text_type_name');
 const jobInput = document.querySelector('.popup__text_type_position');
+
 const btnEditProfile = document.querySelector('.profile__edit-button');
 const btnAddCard = document.querySelector('.profile__add-button');
+const btnEditAvatar = document.querySelector('.profile__avatar_hover');
+const btnDeleteCard = document.querySelector('#delete-card')
+
 const elementsContainer = document.querySelector('.elements__list');
+const btnPopupSubmit = '.popup__submit';
 const userName = '.profile__title';
 const userInfo = '.profile__position';
+
 const initialCards = [
   {
     name: 'Алтай',
@@ -44,5 +53,6 @@ const validationSelectors = {
 
 export {
   popupEditProfile, popupAddCard, userName, nameInput, jobInput, userInfo,
-  btnEditProfile, btnAddCard, elementsContainer, initialCards, validationSelectors
+  btnEditProfile, btnAddCard, elementsContainer, initialCards, validationSelectors,
+  btnDeleteCard, btnEditAvatar, popupProfileAvatar, btnPopupSubmit
 }

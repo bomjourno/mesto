@@ -14,7 +14,8 @@
     <main>
         <section class="profile">
             <div class="profile__cover">
-                <img class="profile__avatar" src="<%=require('./images/avatar-img.jpg')%>" alt="Аватар">
+                <img class="profile__avatar" src="<%=require('./images/avatar-img.jpg')%>" alt="Аватар" title="Изменить аватар профиля" >
+                <div class="profile__avatar_hover"></div>
                 <div class="profile__info">
                     <h1 class="profile__title">Жак-Ив Кусто</h1>
                     <button type="button" class="profile__edit-button"></button>
@@ -88,6 +89,22 @@
             </form>
         </div>
     </div>
+    <div class="popup popup_change-avatar">
+        <div class="popup__container">
+            <button class="popup__close-button" type="button"></button>
+            <form class="popup__form" name="myForm">
+                <fieldset class="popup__form-set">
+                    <h2 class="popup__title">Обновить аватар</h2>
+                    <label class="label">
+                        <input class="popup__text popup__text_type_link" id="link-input" name="link" type="url"
+                            placeholder="URL" required>
+                        <span class="popup__text-error link-input-error"></span>
+                    </label>
+                    <button class="popup__submit" type="submit">Сохранить</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
     <div class="popup popup_fullscreen-card">
         <figure class="popup__figure">
             <button class="popup__close-button" type="button"></button>
@@ -101,7 +118,7 @@
                 <fieldset class="popup__form-set">
                     <button class="popup__close-button" type="button"></button>
                     <h2 class="popup__title popup__title-confirm">Вы уверены?</h2>
-                    <button class="popup__submit" type="submit">Да</button>
+                    <button id="delete-card" class="popup__submit" type="submit">Да</button>
                 </fieldset>
             </form>
         </div>
