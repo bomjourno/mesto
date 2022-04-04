@@ -52,6 +52,7 @@ export default class Card {
 
   delete() {
     this._element.remove();
+    this._element = null;
   }
 
   setLike(like) {

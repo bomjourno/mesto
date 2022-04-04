@@ -29,22 +29,33 @@ const popupWithConfirmation = new PopupWithConfirmation('.popup_delete-card',
     btnDeleteCard.textContent = 'Удаление...'
     api.deleteCard(card._idCard)
       .then(() => card.delete())
+      .then(() => popupWithConfirmation.close())
       .catch((err) => `Не удалось удалить карточку: ${err.status}`)
       .finally(() => {
         btnDeleteCard.textContent = 'Карта удалена';
-        popupWithConfirmation.close();
       })
   })
+
+const cardsList = new Section(
+  {
+    renderer: (item) => {
+      cardsList.addItem(createCard(item))
+    }
+  }, elementsContainer
+)
 
 const userProfilePopup = new PopupWithForm('.popup_edit-profile',
   function submitForm(data) {
     btnLoading(popupEditProfile, btnPopupSubmit, true)
-    api.patchUserData(data).then((res) => {
-      user.setUserInfo({ name: res.name, position: res.about, id: res._id, avatar: res.avatar });
-    }).finally(() => {
-      btnLoading(popupEditProfile, btnPopupSubmit, false)
-      userProfilePopup.close()
-    })
+    api.patchUserData(data)
+      .then((res) => {
+        user.setUserInfo({ name: res.name, position: res.about, id: res._id, avatar: res.avatar });
+      })
+      .then(() => userProfilePopup.close())
+      .catch((err) => `Не удалось удалить карточку: ${err.status}`)
+      .finally(() => {
+        btnLoading(popupEditProfile, btnPopupSubmit, false)
+      })
   })
 
 const popupChangeAvatar = new PopupWithForm('.popup_change-avatar',
@@ -54,13 +65,12 @@ const popupChangeAvatar = new PopupWithForm('.popup_change-avatar',
       .then((res) => {
         user.setUserInfo({ name: res.name, position: res.about, id: res._id, avatar: res.avatar })
       })
+      .then(() => popupChangeAvatar.close())
       .catch(err => err.status)
       .finally(() => {
         btnLoading(popupProfileAvatar, btnPopupSubmit, false)
-        popupChangeAvatar.close()
       })
   });
-
 
 const addCardPopup = new PopupWithForm('.popup_add-card', (data) => {
   addNewPost(data);
@@ -69,7 +79,9 @@ const addCardPopup = new PopupWithForm('.popup_add-card', (data) => {
 // Подгружаем данные пользователя с сервера
 api.getUserData().then((res) => {
   user.setUserInfo({ name: res.name, position: res.about, id: res._id, avatar: res.avatar });
-}).catch(err => console.log(`Невозможно получить данные пользователя: ${err.status}`))
+})
+  .then(() => getStartCard())
+  .catch(err => console.log(`Невозможно получить данные пользователя: ${err.status}`))
 
 // Включаем валидацию форм
 const profileFormValidator = new FormValidator(validationSelectors, popupEditProfile);
@@ -81,29 +93,22 @@ addCardFormValidator.enableValidation();
 const editProfileAvatar = new FormValidator(validationSelectors, popupProfileAvatar)
 editProfileAvatar.enableValidation();
 
-// Подгружаем карточки с сервера
-let startCardArr = [];
-let cardsList;
-
-api.getInitialCards().then((data) => {
-  console.log('Карточки загружены с сервера')
-  startCardArr = data.map(item => {
-    return { name: item.name, link: item.link, likes: item.likes, _id: item._id, owner: item.owner._id }
+const getStartCard = () => {
+  api.getInitialCards().then((data) => {
+    console.log('Карточки загружены с сервера')
+    const startCardArr = data.map(item => {
+      return { name: item.name, link: item.link, likes: item.likes, _id: item._id, owner: item.owner._id, createdDate: item.createdAt }
+    })
+    const startCardArrSorted = startCardArr.sort((a, b) => {
+      return new Date(a.createdDate) - new Date(b.createdDate)
+    })
+    cardsList.renderItems(startCardArrSorted);
+  }).catch(err => {
+    console.log(`Не удалось загрузить данные с сервера, ошибка: ${err.status}`);
+    cardsList.renderItems(initialCards);
   })
-}).catch(err => {
-  console.log(`Не удалось загрузить данные с сервера, ошибка: ${err.status}`);
-  startCardArr = initialCards;
-}).finally(() => {
-  cardsList = new Section(
-    {
-      items: startCardArr,
-      renderer: (item) => {
-        cardsList.addItem(createCard(item))
-      }
-    }, elementsContainer
-  )
-  cardsList.renderItems();
-})
+}
+
 
 // ---------------------------------
 function createCard(cardData) {
@@ -138,22 +143,28 @@ const addNewPost = (data) => {
     .then((data) => {
       cardsList.addItem(data)
     })
+    .then(() => addCardPopup.close())
     .catch((err) => console.log(`Не удалось добавить карточку: ${err.status}`))
     .finally(() => {
       btnLoading(popupAddCard, btnPopupSubmit, false)
-      addCardPopup.close()
     })
 }
 
 const likeCard = (card) => {
   if (card.isLiked()) {
-    api.unlikeCard(card._idCard).then((res) => card.setLike(res.likes))
+    api.unlikeCard(card._idCard)
+      .then((res) => {
+        card.setLike(res.likes)
+        card.toggleLike()
+      })
       .catch(err => console.log(err.status))
-      .finally(() => card.toggleLike());
   } else {
-    api.likeCard(card._idCard).then((res) => card.setLike(res.likes))
+    api.likeCard(card._idCard)
+      .then((res) => {
+        card.setLike(res.likes)
+        card.toggleLike()
+      })
       .catch(err => console.log(err.status))
-      .finally(() => card.toggleLike());
   }
 }
 
