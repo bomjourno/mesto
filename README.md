@@ -29,6 +29,7 @@
 `
 git clone https://github.com/bomjourno/mesto.git
 `
+
 2. Установка зависимостей 
 
 cd mesto
